@@ -6,6 +6,10 @@ public class Player {
 
     private List<Ship> ships;
 
+    private int numberOfNotBrokenShips = 0;
+
+    private int[][] field;
+
     public Player(String name){
         this.name = name;
         List<Ship> ships = new ArrayList<>();
@@ -32,5 +36,29 @@ public class Player {
 
     public List<Ship> getShips() {
         return ships;
+    }
+
+    public void setShips(List<Ship> ships) {
+        this.ships = ships;
+    }
+
+    public int[][] getField(){
+        return field;
+    }
+
+    public void increaseBtokenShips(){
+        ++this.numberOfNotBrokenShips;
+    }
+
+    public int getNumberOfNotBrokenShips() {
+        return numberOfNotBrokenShips;
+    }
+
+    public void setNumberOfNotBrokenShips(int numberOfNotBrokenShips) {
+        this.numberOfNotBrokenShips = numberOfNotBrokenShips;
+    }
+
+    public void setField(int[][] field) {
+        this.field = field;
     }
 }

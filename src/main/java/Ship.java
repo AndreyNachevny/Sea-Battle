@@ -1,5 +1,4 @@
 public class Ship {
-
     private int size;
 
     private int health;
@@ -7,6 +6,10 @@ public class Ship {
     public Ship(int size){
         this.size = size;
         health = size;
+    }
+
+    public void getDamage(){
+        health--;
     }
 
     public int getSize() {

@@ -24,13 +24,13 @@ public class Game {
             if (testNewDeck(field, i, j)) {
                 if (direction == 0) { //вверх
                     if (testNewDeck(field, i - (numberOfDecks - 1), j)){
-
                         field[i][j] = numberOfDecks;
                         okrBegin(field, i, j, -2);
                         for (int k = numberOfDecks - 1; k >= 1; k--) {
                             field[i -k][j] = numberOfDecks;
                             okrBegin(field, i - k, j, -2);
                         }
+                        break;
                     }
                 }
                 else if (direction == 1){ // вправо
@@ -42,6 +42,7 @@ public class Game {
                             field[i][j + k] = numberOfDecks;
                             okrBegin(field, i, j + k, -2);
                         }
+                        break;
                     }
                 }
                 else if (direction == 2){ // вниз
@@ -53,6 +54,7 @@ public class Game {
                             field[i + k][j] = numberOfDecks;
                             okrBegin(field, i + k, j, -2);
                         }
+                        break;
                     }
                 }
                 else { // влево
@@ -63,16 +65,16 @@ public class Game {
                             field[i][j -k] = numberOfDecks;
                             okrBegin(field, i, j - k, -2);
                         }
+                        break;
                     }
                 }
-                break;
             }
         }
         okrEnd(field);
     }
 
     private boolean testNewDeck(int [][]mas, int i, int j){
-        if (!isOutOfRange(i, j)) return false;
+        if (!isNotOutOfRange(i, j)) return false;
         return (mas[i][j] == 0) || (mas[i][j] == -2);
     }
 
@@ -85,27 +87,33 @@ public class Game {
         }
     }
 
-    private void okrBegin(int[][] mas, int i, int j, int val) {
-        setEnv(mas, i - 1, j - 1, val);
-        setEnv(mas, i - 1, j, val);
-        setEnv(mas, i - 1, j + 1, val);
-        setEnv(mas, i, j + 1, val);
-        setEnv(mas, i, j - 1, val);
-        setEnv(mas, i + 1, j + 1, val);
-        setEnv(mas, i + 1, j, val);
-        setEnv(mas, i + 1, j - 1, val);
+    private void okrBegin(int[][] field, int i, int j, int val) {
+        setEnv(field, i - 1, j - 1, val);
+        setEnv(field, i - 1, j, val);
+        setEnv(field, i - 1, j + 1, val);
+        setEnv(field, i, j + 1, val);
+        setEnv(field, i, j - 1, val);
+        setEnv(field, i + 1, j + 1, val);
+        setEnv(field, i + 1, j, val);
+        setEnv(field, i + 1, j - 1, val);
     }
 
-    private void setEnv(int[][] mas, int i, int j, int val) {
-        if (isOutOfRange(i, j) && mas[i][j] == 0) {
-            mas[i][j] = val;
+    private void setEnv(int[][] field, int i, int j, int val) {
+        if (isNotOutOfRange(i, j) && field[i][j] == 0) {
+            field[i][j] = val;
         }
     }
 
-    private boolean isOutOfRange(int i, int j) {
-        if (((i >= 0) && (i <= 9)) && ((j >= 0) && (j <= 9))) {
-            return true;
-        } else return false;
+    private boolean isNotOutOfRange(int i, int j) {
+        return ((i >= 0) && (i <= 9)) && ((j >= 0) && (j <= 9));
+    }
+
+    public void attack(int [][] field, int i, int j){
+        if(field[i][j] > 0){
+            int numberOfDeck = field[i][j];
+            field[i][j] = -3;
+
+        } else field[i][j] = -2;
     }
 
     public int[][] setAutoDeck(){
@@ -120,6 +128,7 @@ public class Game {
         for (int i = 1;i<= 4;i++){
             autoPositionShips(field,1);
         }
+        return field;
     }
 
 
@@ -153,5 +162,18 @@ public class Game {
 
     public void setSecondField(int[][] secondField) {
         this.secondField = secondField;
+    }
+
+    public static void main(String[] args) {
+        Player player1 = new Player("test");
+        Player player2 = new Player("test2");
+        Game game = new Game(player1,player2);
+        int[][] field = game.setAutoDeck();
+        for(int i = 0; i < 10; i++ ){
+            for(int j =0; j < 10; j ++){
+                System.out.print(field[i][j] + " ");
+            }
+            System.out.println();
+        }
     }
 }

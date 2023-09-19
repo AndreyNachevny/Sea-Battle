@@ -14,34 +14,36 @@ public class Game {
         Scanner scanner = new Scanner(System.in);
         firstPlayer.setField(setAutoDeck(firstPlayer));
         secondPlayer.setField(setAutoDeck(secondPlayer));
+        int row,col;
         while(true){
             System.out.println("Field of " +  firstPlayer.getName() + " player: ");
             printField(firstPlayer);
             System.out.println("Field of " + secondPlayer.getName() + " player: ");
             printField(secondPlayer);
             System.out.println("Shot coordinates to second player: ");
-
-            if(shoot(secondPlayer,scanner)){
+             row = scanner.nextInt();
+             col = scanner.nextInt();
+            if(shoot(secondPlayer,row - 1,col - 1)){
                 break;
             }
             System.out.println("Shot coordinates to first player: ");
-            if(shoot(firstPlayer,scanner)){
+            row = scanner.nextInt();
+            col = scanner.nextInt();
+            if(shoot(firstPlayer,row  - 1,col - 1)){
                 break;
             }
 
         }
     }
 
-    private boolean shoot(Player player, Scanner scanner){
-        int iFirst = scanner.nextInt();
-        int jFirst = scanner.nextInt();
-        return attack(player, iFirst, jFirst) != null;
+    private boolean shoot(Player player, int row, int column){
+        return attack(player, row, column) != null;
     }
 
     private void printField(Player player){
         for(int i = 0; i < 10; i++ ){
             for(int j =0; j < 10; j ++){
-                System.out.print(player.getField()[i][j] + " ");
+                System.out.print(player.getField()[i][j] + "  ");
             }
             System.out.println();
         }
